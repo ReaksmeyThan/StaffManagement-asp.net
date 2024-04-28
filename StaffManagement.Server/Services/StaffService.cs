@@ -91,6 +91,8 @@ namespace StaffManagement.Server.Services
             {
                 throw new ArgumentException("Invalid gender value. Use 1 for Male and 2 for Female.");
             }
+
+
         }
     }
 }

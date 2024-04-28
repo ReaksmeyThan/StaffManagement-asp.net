@@ -95,6 +95,31 @@ body {
      
     }
 
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+.search input[type="text"] {
+    padding: 8px;
+    border-radius: 4px;
+    flex-grow: 1;
+    margin-right: 10px;
+    
+}
+
+.btn {
+    align-items: center;
+
+}
+
+
 .form_title {
     color: red
 }
@@ -110,16 +135,13 @@ body {
 }
 
 
-.form input {
+.form input, .gender-dropdown {
     width: 100%;
     margin-bottom: 10px;
     margin-top: 10px;
     height: 30px;
-   
 }
 
-.form textarea {
-    width: 100%;
-    margin-top: 10px;
-   
-}
+
+
+

@@ -16,7 +16,6 @@ builder.Services.AddScoped<StaffService>();
 
 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -42,8 +41,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHttpsRedirection();  // Only use HTTPS redirection in production
+}
 
-app.UseHttpsRedirection();  // Only use HTTPS redirection in production
 app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
