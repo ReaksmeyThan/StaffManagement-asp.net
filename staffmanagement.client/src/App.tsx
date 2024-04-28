@@ -173,50 +173,59 @@ function App() {
                 <div className="form_title">
                     <h2>{action} User</h2>
                 </div>
-                
+
+
                 <div className="form">
-                    <label htmlFor="">Staff ID</label>
-                    <input
-                        type="text"
-                        value={user.staffID}
-                        onChange={(e) => setUser({ ...user, staffID: e.target.value })}
-                    />
-                    <label htmlFor="">Full Name</label>
-                    <input
-                        type="text"
-                        value={user.fullName}
-                        onChange={(e) => setUser({ ...user, fullName: e.target.value })}
-                    />
-                    <label htmlFor="">Birthday</label>
 
-                    <input
-                        type="date"
-                        value={user.birthday}
-                        onChange={(e) => setUser({ ...user, birthday: e.target.value })}
-                    />
+                <div className = "wrap">
+                        <label htmlFor="">Staff ID</label>
+                        <input
+                            type="text"
+                            value={user.staffID}
+                            onChange={(e) => setUser({ ...user, staffID: e.target.value })}
+                        />
+                                   
+                        <label htmlFor="">Full Name</label>
+                        <input
+                            type="text"
+                            value={user.fullName}
+                            onChange={(e) => setUser({ ...user, fullName: e.target.value })}
+                            />                 
+                                              
+                        <label htmlFor="">Birthday</label>
 
-                    <label htmlFor="">Gender</label>
+                        <input
+                            type="date"
+                            value={user.birthday}
+                            onChange={(e) => setUser({ ...user, birthday: e.target.value })}
+                        />
+                                       
+                        <label htmlFor="">Gender</label>
 
-                    <select
-                        value={gender}
-                        onChange={(e) => setGender(Number(e.target.value))}
-                        className="gender-dropdown"
-                    >
-                        <option value={1}>Male</option>
-                        <option value={2}>Female</option>
+                        <select
+                            value={gender}
+                            onChange={(e) => setGender(Number(e.target.value))}
+                            className="gender-dropdown"
+                        >
+                            <option value={1}>Male</option>
+                            <option value={2}>Female</option>
                     </select>
+                    
+                   
+                        {action === 'Add' && (
+                            <button className="btn" onClick={() => addUser()}>
+                                Submit
+                            </button>
+                        )}
+                        {action === 'Edit' && (
+                            <button className="btn" onClick={() => updateUser()}>
+                                Update
+                            </button>
+                        )}
 
-                    {action === 'Add' && (
-                        <button className="btn" onClick={() => addUser()}>
-                            Submit
-                        </button>
-                    )}
-                    {action === 'Edit' && (
-                        <button className="btn" onClick={() => updateUser()}>
-                            Update
-                        </button>
-                    )}
+                        </div>
                 </div>
+
             </Modal>
         </div>
     );

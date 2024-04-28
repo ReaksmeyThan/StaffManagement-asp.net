@@ -120,26 +120,37 @@ body {
 }
 
 
+
 .form_title {
     color: red
 }
 
 .form label {
     width: 100%;
-    /* margin-bottom: 10px;*/
+    margin-bottom: 10px;
     color: black;
     font: large;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 16px;
-   
+    align-content:flex-start   
 }
 
 
-.form input, .gender-dropdown {
+.form input,
+.gender-dropdown {
     width: 100%;
     margin-bottom: 10px;
     margin-top: 10px;
     height: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.wrap {
+    background-color: #f2f2f2;
+    width: 50%;
+    margin: 0 auto; 
+    border-radius: 2%; 
+    border: 1px solid gray; 
+    padding: 20px; 
 }
 
 
