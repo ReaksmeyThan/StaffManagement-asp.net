@@ -7,11 +7,11 @@ namespace StaffManagement.Server.Models
 
         [Required]
         [StringLength(8, ErrorMessage = "Staff ID must not exceed 8 characters.")]
-        public string StaffID { get; set; }
+        public required string StaffID { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "Full name must not exceed 100 characters.")]
-        public string FullName { get; set; }
+        public required string FullName { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
