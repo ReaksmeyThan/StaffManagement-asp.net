@@ -41,7 +41,7 @@ function App() {
     const [action, setAction] = useState<'Add' | 'Edit'>('Add');
     const [userdata, setUserdata] = useState<User[]>([]);
     const [user, setUser] = useState({ staffID: '', fullName: '', birthday: '', gender: 0 });
-    const [editIndex, setEditIndex] = useState<number | null>(null);
+   // const [editIndex, setEditIndex] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [gender, setGender] = useState<number>(0); // Initialize gender state
     
@@ -49,7 +49,7 @@ function App() {
 
     useEffect(() => {
         fetchUsers();
-    }, []); // Empty array means this effect will run only once, similar to componentDidMount
+    }, []); 
 
     const fetchUsers = async () => {
         try {
@@ -91,22 +91,37 @@ function App() {
         const selectedUser = userdata.find((_, i) => i === index);
         if (selectedUser) {
             setUser(selectedUser);
-            setEditIndex(index);
+         //   setEditIndex(index);
             onOpenModal();
         }
     };
 
-    const updateUser = () => {
-        const newUsers = userdata.map((x, i) => {
-            if (i === editIndex!) {
-                return user;
+    const updateUser = async (idToDelete: string) => {
+        try {
+            const response = await fetch(apiUrl + `/Staff/${idToDelete}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update user');
             }
-            return x;
-        });
-        setUserdata(newUsers);
-        setUser(blankUser);
-        setEditIndex(null);
-        onCloseModal();
+            // If update is successful, update the user data in the state
+            const updatedUserData = userdata.map((userData) => {
+                if (userData.staffID === idToDelete) {
+                    return user;
+                }
+                return userData;
+            });
+            setUserdata(updatedUserData);
+            setUser(blankUser); // Reset user state
+          //  setEditIndex(null); // Reset editIndex state
+            onCloseModal(); // Close the modal
+        } catch (error) {
+            console.error('Error updating user:', error);
+        }
     };
 
     const deleteUser = (index: number) => {
@@ -115,14 +130,14 @@ function App() {
         const confirmed = window.confirm("Are you sure you want to delete this record?");
         if (confirmed) {
             const idToDelete = userdata[index].staffID;
-            deleteRecord(idToDelete);
+            findByID(idToDelete,'DELETE');
         }
     };
 
-    const deleteRecord = async (id: string) => {
+    const findByID = async (id: string,methodName:string) => {
         try {
             const response = await fetch(apiUrl +`/Staff/${id}`, {
-                method: 'DELETE'
+                method: methodName
             });
             if (!response.ok) {
                 throw new Error('Failed to delete user');
@@ -132,7 +147,7 @@ function App() {
             setUserdata(updatedUsers);
             console.log('User deleted successfully');
         } catch (error) {
-            console.error('Hello ===========> Error deleting user:', error);
+            console.error(' Error deleting user:', error);
         }
     };
     // Function to filter users based on search query
@@ -246,7 +261,7 @@ function App() {
                             </button>
                         )}
                         {action === 'Edit' && (
-                            <button className="btn" onClick={() => updateUser()}>
+                            <button className="btn" onClick={() => updateUser(user.staffID)}>
                                 Update
                             </button>
                         )}

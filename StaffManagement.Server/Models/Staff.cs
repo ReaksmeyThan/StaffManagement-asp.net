@@ -20,7 +20,10 @@ namespace StaffManagement.Server.Models
         [Required]
         [Range(1, 2, ErrorMessage = "Gender must be 1 for Male or 2 for Female.")]
         public int Gender { get; set; }
-
+        public Staff()
+        {
+           
+        }
     }
 
 }
