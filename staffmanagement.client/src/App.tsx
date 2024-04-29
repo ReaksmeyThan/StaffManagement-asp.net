@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import 'react-responsive-modal/styles.css';
-import { PlusCircle, Edit, Trash2 } from 'react-feather';
+import { PlusCircle, Search, Edit, Trash2 } from 'react-feather';
 import { Modal } from 'react-responsive-modal';
 
 interface User {
@@ -41,15 +41,15 @@ function App() {
     const [action, setAction] = useState<'Add' | 'Edit'>('Add');
     const [userdata, setUserdata] = useState<User[]>([]);
     const [user, setUser] = useState({ staffID: '', fullName: '', birthday: '', gender: 0 });
-   // const [editIndex, setEditIndex] = useState<number | null>(null);
+    // const [editIndex, setEditIndex] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [gender, setGender] = useState<number>(0); // Initialize gender state
-    
+
 
 
     useEffect(() => {
         fetchUsers();
-    }, []); 
+    }, []);
 
     const fetchUsers = async () => {
         try {
@@ -58,7 +58,7 @@ function App() {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                  
+
                 },
             });
 
@@ -81,9 +81,9 @@ function App() {
     };
 
     const addUser = async () => {
-     /*   setUserdata([...userdata, user]);
-        setUser(blankUser);
-        onCloseModal();*/
+        /*   setUserdata([...userdata, user]);
+           setUser(blankUser);
+           onCloseModal();*/
         try {
             const response = await fetch(apiUrl + '/Staff', {
                 method: 'POST',
@@ -114,7 +114,7 @@ function App() {
         const selectedUser = userdata.find((_, i) => i === index);
         if (selectedUser) {
             setUser(selectedUser);
-         //   setEditIndex(index);
+            //   setEditIndex(index);
             onOpenModal();
         }
     };
@@ -140,7 +140,7 @@ function App() {
             });
             setUserdata(updatedUserData);
             setUser(blankUser); // Reset user state
-          //  setEditIndex(null); // Reset editIndex state
+            //  setEditIndex(null); // Reset editIndex state
             onCloseModal(); // Close the modal
         } catch (error) {
             console.error('Error updating user:', error);
@@ -148,18 +148,18 @@ function App() {
     };
 
     const deleteUser = (index: number) => {
-       /* const newUsers = userdata.filter((_, i) => i !== index);
-        setUserdata(newUsers);*/
+        /* const newUsers = userdata.filter((_, i) => i !== index);
+         setUserdata(newUsers);*/
         const confirmed = window.confirm("Are you sure you want to delete this record?");
         if (confirmed) {
             const idToDelete = userdata[index].staffID;
-            findByID(idToDelete,'DELETE');
+            findByID(idToDelete, 'DELETE');
         }
     };
 
-    const findByID = async (id: string,methodName:string) => {
+    const findByID = async (id: string, methodName: string) => {
         try {
-            const response = await fetch(apiUrl +`/Staff/${id}`, {
+            const response = await fetch(apiUrl + `/Staff/${id}`, {
                 method: methodName
             });
             if (!response.ok) {
@@ -187,14 +187,37 @@ function App() {
 
             <div className="toolbar">
                 <div className="search">
+
                     <input
-                    type="text"
-                        placeholder="Search by name"     
+                        type="text"
+                        placeholder="Search by full name"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
+                    <input
+                        type="text"
+                        placeholder="Search by full name"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        placeholder="Start Date"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        placeholder="End Date"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <button className="btn btn-p" onClick={onOpenModal}>
+                        <Search size={16}></Search>
+                        <span>Search</span>
+                    </button>
                 </div>
-             
+
                 <button className="btn btn-p" onClick={onOpenModal}>
                     <PlusCircle size={16}></PlusCircle>
                     <span>Add</span>
@@ -244,21 +267,21 @@ function App() {
 
                 <div className="form">
 
-                <div className = "wrap">
+                    <div className="wrap">
                         <label htmlFor="">Staff ID</label>
                         <input
                             type="text"
                             value={user.staffID}
                             onChange={(e) => setUser({ ...user, staffID: e.target.value })}
                         />
-                                   
+
                         <label htmlFor="">Full Name</label>
                         <input
                             type="text"
                             value={user.fullName}
                             onChange={(e) => setUser({ ...user, fullName: e.target.value })}
-                            />                 
-                                              
+                        />
+
                         <label htmlFor="">Birthday</label>
 
                         <input
@@ -266,7 +289,7 @@ function App() {
                             value={user.birthday}
                             onChange={(e) => setUser({ ...user, birthday: e.target.value })}
                         />
-                                       
+
                         <label htmlFor="">Gender</label>
 
                         <select
@@ -276,9 +299,9 @@ function App() {
                         >
                             <option value={1}>Male</option>
                             <option value={2}>Female</option>
-                    </select>
-                    
-                   
+                        </select>
+
+
                         {action === 'Add' && (
                             <button className="btn" onClick={() => addUser()}>
                                 Submit
@@ -290,7 +313,7 @@ function App() {
                             </button>
                         )}
 
-                        </div>
+                    </div>
                 </div>
 
             </Modal>
