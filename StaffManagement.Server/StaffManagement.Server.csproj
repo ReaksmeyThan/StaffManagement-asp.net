@@ -8,6 +8,7 @@
     <SpaRoot>..\staffmanagement.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
+    <UserSecretsId>fe94006e-ee68-4227-9317-33dfeeed03ce</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

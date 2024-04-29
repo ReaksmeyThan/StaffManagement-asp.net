@@ -53,7 +53,15 @@ function App() {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch(apiUrl + '/Staff');
+            const response = await fetch(apiUrl + '/Staff', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  
+                },
+            });
+
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -122,8 +130,9 @@ function App() {
             // If deletion is successful, update the user data state
             const updatedUsers = userdata.filter(user => user.staffID !== id);
             setUserdata(updatedUsers);
+            console.log('User deleted successfully');
         } catch (error) {
-            console.error('Error deleting user:', error);
+            console.error('Hello ===========> Error deleting user:', error);
         }
     };
     // Function to filter users based on search query

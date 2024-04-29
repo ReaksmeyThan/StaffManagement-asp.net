@@ -45,7 +45,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();  // Only use HTTPS redirection in production
 }
-
+// Apply CORS policy to all requests
+app.UseCors("AllowAllOrigins");
 app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
