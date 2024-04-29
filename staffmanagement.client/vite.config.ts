@@ -33,7 +33,8 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 }
 
 // Define the target URL for your backend API
-const target = 'http://localhost:7070/';
+//const target = 'http://localhost:5039';
+const target = 'https://localhost:7070/'; 
 
 // Configure Vite
 export default defineConfig({
@@ -43,7 +44,7 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
-   /* server: {
+  server: {
         proxy: {
             '^/api/staff': {
                 target,
@@ -56,8 +57,8 @@ export default defineConfig({
             cert: fs.readFileSync(certFilePath),
         }
         }
-*/
-    server: {
+
+   /* server: {
         proxy: {
             '^/api/staff': {
                 target,
@@ -65,6 +66,6 @@ export default defineConfig({
             }
         },
         port: 5173,
-    }
+    }*/
     
 })

@@ -11,6 +11,19 @@ interface User {
     gender: number;
 }
 
+//const https_ = 'https://localhost:7070/api';
+//const https_ = 'http://localhost:5039/api';
+// Define base URLs for development and production environments
+export const config = {
+    development: {
+        apiUrl: 'http://localhost:5039/api'
+    },
+    production: {
+        apiUrl: 'https://localhost:7070/api/api'
+    }
+};
+
+
 function App() {
     const blankUser: User = {
         staffID: '',
@@ -19,6 +32,11 @@ function App() {
         gender: 0
     };
 
+    // Determine the environment (development or production)
+    const environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+    // Select the appropriate base URL based on the environment
+    const apiUrl = config[environment].apiUrl;
+
     const [open, setOpen] = useState(false);
     const [action, setAction] = useState<'Add' | 'Edit'>('Add');
     const [userdata, setUserdata] = useState<User[]>([]);
@@ -26,6 +44,7 @@ function App() {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [gender, setGender] = useState<number>(0); // Initialize gender state
+    
 
 
     useEffect(() => {
@@ -34,7 +53,7 @@ function App() {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:5039/api/Staff');
+            const response = await fetch(apiUrl + '/Staff');
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -94,7 +113,7 @@ function App() {
 
     const deleteRecord = async (id: string) => {
         try {
-            const response = await fetch(`http://localhost:5039/api/Staff/${id}`, {
+            const response = await fetch(apiUrl +`/Staff/${id}`, {
                 method: 'DELETE'
             });
             if (!response.ok) {
