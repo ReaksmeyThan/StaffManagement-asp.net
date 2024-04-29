@@ -74,15 +74,38 @@ function App() {
     };
 
     const onOpenModal = () => setOpen(true);
+
     const onCloseModal = () => {
         setOpen(false);
         setAction('Add');
     };
 
-    const addUser = () => {
-        setUserdata([...userdata, user]);
+    const addUser = async () => {
+     /*   setUserdata([...userdata, user]);
         setUser(blankUser);
-        onCloseModal();
+        onCloseModal();*/
+        try {
+            const response = await fetch(apiUrl + '/Staff', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add user');
+            }
+
+            // If the user is added successfully, update the local state with the new user
+            const newUser = await response.json();
+            setUserdata([...userdata, newUser]);
+            setUser(blankUser);
+            onCloseModal();
+        } catch (error) {
+            console.error('Error adding user:', error);
+            alert('Failed to add user. Please try again later.');
+        }
     };
 
     const editUser = (index: number) => {
@@ -154,6 +177,7 @@ function App() {
     const filteredUsers = userdata.filter((user) =>
         user.fullName.toLowerCase().includes(searchQuery ? searchQuery.toLowerCase() : '')
     );
+
 
     return (
         <div className="container">
